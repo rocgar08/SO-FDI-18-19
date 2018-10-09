@@ -1,0 +1,89 @@
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+       
+#include "mytar.h"
+       
+char use[]="Usage: tar -c|x|d|a -f file_mytar [file1 file2 ...]\n";
+
+int main(int argc, char *argv[]) {
+
+  int opt, nExtra, retCode=EXIT_SUCCESS;
+  flags flag=NONE;
+  char *tarName=NULL;
+  char *destination=NULL;
+
+  //Minimum args required=3: mytar -tf file.tar
+  if(argc < 3){
+    fprintf(stderr,"%s",use);
+    exit(EXIT_FAILURE);
+  }
+  //Parse command-line options
+  while((opt = getopt(argc, argv, "cxdaf:")) != -1) {
+    switch(opt) {
+      case 'c':
+        flag=(flag==NONE)?CREATE:ERROR;
+        break;
+      case 'x':
+        flag=(flag==NONE)?EXTRACT:ERROR;
+        break;
+      case 'f':
+        tarName = optarg;
+        break;
+      case 'd':
+        flag=(flag==NONE)?DELETE:ERROR;
+        break;
+      case 'a':
+		 flag=(flag==NONE)?APPEND:ERROR;
+		 break;
+      default:
+        flag=ERROR;
+    }
+    //Was an invalid option detected?
+    if(flag==ERROR){
+      fprintf(stderr,"%s",use);
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  //Valid flag + arg + file[s]
+  if(flag==NONE || tarName==NULL) {
+    fprintf(stderr,"%s",use);
+    exit(EXIT_FAILURE);
+  }
+
+  //#extra args
+  nExtra=argc-optind;
+
+  //Execute the required action
+  switch(flag) {
+    case CREATE:
+      retCode=createTar(nExtra, &argv[optind], tarName);
+      break;
+    case EXTRACT:
+      if(nExtra!=0){
+        fprintf(stderr,"%s",use);
+        exit(EXIT_FAILURE);
+      }
+      retCode=extractTar(tarName);
+      break;
+    case DELETE:
+      if(nExtra!=1){
+        fprintf(stderr,"%s",use);
+        exit(EXIT_FAILURE);
+      }
+      retCode=deleteOneFile(tarName,argv[optind]);
+      break;
+    case APPEND:
+    	/*SIN ESTO NO HACE NADA */
+    	  destination=malloc(strlen(tarName));
+    	  strncpy(destination,tarName,strlen(tarName));
+    	  strcat(destination,".new.mtar");
+		  retCode = appendFiles(tarName,nExtra,argv[optind],destination);
+		  break;
+
+    default:
+      retCode=EXIT_FAILURE;
+  }
+  exit(retCode);
+}
