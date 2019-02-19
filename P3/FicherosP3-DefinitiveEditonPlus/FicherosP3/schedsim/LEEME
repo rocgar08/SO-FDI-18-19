@@ -1,0 +1,5 @@
+	Line format:
+	    TaskName Priority ArrivalTime <CPU1> <IO1> <CPU2> <IO2> ...
+
+sjf + qq -> strf tiene su propio ejemplo
+prio + qq -> prp tiene el ejemplo1 

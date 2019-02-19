@@ -1,0 +1,8 @@
+./schedsim -h
+./schedsim -L
+./schedsim -i examples/example1.txt -s FCFS
+./schedsim -i examples/exampleSTRF_2.txt -s STRF -p
+../gant-gplop
+./generate_gantt_chart ../schedsim/CPU_0.log
+exampleFCFSmio
+examples/examplePrio.txt
