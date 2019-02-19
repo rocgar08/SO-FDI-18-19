@@ -1,0 +1,6 @@
+sudo rmmod chardev_leds
+dmesg | tail
+sudo mknod -m 666 /dev/chardev_leds c 243 0
+sudo insmod chardev_leds.ko
+sudo echo 123 > /dev/chardev_leds
+sudo rm chardev_leds
