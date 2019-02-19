@@ -1,0 +1,3 @@
+NumRecibo = 30X52263UC557192U
+NumPedido = 90243
+mas@maslenovo.es

@@ -1,0 +1,12 @@
+./fs-fuse -t 2097152 -a virtual-disk -f '-d -s mount-point'
+fusermount -u mount-point
+./my-fsck-static-64\  virtual-disk
+ls -la mount-point/
+hexdump virtual-disk -C -s 32768 -n 7
+ln mount-point/prueb.txt mount-point/prueb2.txt
+./fs-fuse -m -a virtual-disk -f '-d -s mount-point'
+
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+

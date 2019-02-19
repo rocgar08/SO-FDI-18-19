@@ -1,0 +1,6 @@
+
+
+Recently, I've been playing around and, after a research of a problem, I've found that there is constant EMEDIUMTYPE defined in errno.h, with comment "Wrong medium type". Googled and haven't found a good explanation of what that actually means. I've encountered the term while programming a server using OpenSSL (this I'm writing just to provide some context) but not directly.
+
+So, what does EMEDIUMTYPE mean in general and in this context (if there is any difference, of course)?
+
