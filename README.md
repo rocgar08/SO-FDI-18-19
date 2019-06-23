@@ -1,3 +1,3 @@
 # SO-18/19
 Prácticas de SO
-Realizadas por Fernando Candelario y Rocío García
+Realizadas por https://github.com/fernandoka y https://github.com/rocgar08/
